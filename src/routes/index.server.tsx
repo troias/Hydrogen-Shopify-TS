@@ -1,4 +1,4 @@
-import {Suspense} from 'react';
+import { Suspense } from 'react'
 import {
   CacheLong,
   gql,
@@ -7,16 +7,38 @@ import {
   useServerAnalytics,
   useLocalization,
   useShopQuery,
-} from '@shopify/hydrogen';
+} from '@shopify/hydrogen'
 
-import {MEDIA_FRAGMENT, PRODUCT_CARD_FRAGMENT} from '~/lib/fragments';
-import {getHeroPlaceholder} from '~/lib/placeholders';
-import {FeaturedCollections, Hero} from '~/components';
-import {Layout, ProductSwimlane} from '~/components/index.server';
+import { MEDIA_FRAGMENT, PRODUCT_CARD_FRAGMENT } from '~/lib/fragments'
+import { getHeroPlaceholder } from '~/lib/placeholders'
+import { FeaturedCollections, Hero } from '~/components'
+import { Layout, ProductSwimlane } from '~/components/index.server'
 import {
   CollectionConnection,
   ProductConnection,
-} from '@shopify/hydrogen/storefront-api-types';
+} from '@shopify/hydrogen/storefront-api-types'
+
+interface Shop {
+  shop: {
+    name: string
+    description: string
+    descriptionHtml: string
+    url: string
+    media: {
+      edges: {
+        node: {
+          altText: string
+          image: {
+            transformedSrc: string
+          }
+        }
+      }[]
+    }
+    collections: CollectionConnection
+    products: ProductConnection
+  }
+}
+
 
 export default function Homepage() {
   useServerAnalytics({
@@ -24,7 +46,7 @@ export default function Homepage() {
       canonicalPath: '/',
       pageType: ShopifyAnalyticsConstants.pageType.home,
     },
-  });
+  })
 
   return (
     <Layout>
@@ -35,19 +57,19 @@ export default function Homepage() {
         <HomepageContent />
       </Suspense>
     </Layout>
-  );
+  )
 }
 
 function HomepageContent() {
   const {
-    language: {isoCode: languageCode},
-    country: {isoCode: countryCode},
-  } = useLocalization();
+    language: { isoCode: languageCode },
+    country: { isoCode: countryCode },
+  } = useLocalization()
 
-  const {data} = useShopQuery<{
-    heroBanners: CollectionConnection;
-    featuredCollections: CollectionConnection;
-    featuredProducts: ProductConnection;
+  const { data } = useShopQuery<{
+    heroBanners: CollectionConnection
+    featuredCollections: CollectionConnection
+    featuredProducts: ProductConnection
   }>({
     query: HOMEPAGE_CONTENT_QUERY,
     variables: {
@@ -55,14 +77,14 @@ function HomepageContent() {
       country: countryCode,
     },
     preload: true,
-  });
+  })
 
-  const {heroBanners, featuredCollections, featuredProducts} = data;
+  const { heroBanners, featuredCollections, featuredProducts } = data
 
   // fill in the hero banners with placeholders if they're missing
   const [primaryHero, secondaryHero, tertiaryHero] = getHeroPlaceholder(
     heroBanners.nodes,
-  );
+  )
 
   return (
     <>
@@ -81,19 +103,19 @@ function HomepageContent() {
       />
       {tertiaryHero && <Hero {...tertiaryHero} />}
     </>
-  );
+  )
 }
 
 function SeoForHomepage() {
   const {
     data: {
-      shop: {name, description},
+      shop: { name, description },
     },
   } = useShopQuery({
     query: HOMEPAGE_SEO_QUERY,
     cache: CacheLong(),
     preload: true,
-  });
+  }) as { data: Shop }
 
   return (
     <Seo
@@ -104,7 +126,7 @@ function SeoForHomepage() {
         titleTemplate: '%s · Powered by Hydrogen',
       }}
     />
-  );
+  )
 }
 
 /**
@@ -180,7 +202,7 @@ const HOMEPAGE_CONTENT_QUERY = gql`
       }
     }
   }
-`;
+`
 
 const HOMEPAGE_SEO_QUERY = gql`
   query shopInfo {
@@ -189,4 +211,4 @@ const HOMEPAGE_SEO_QUERY = gql`
       description
     }
   }
-`;
+`

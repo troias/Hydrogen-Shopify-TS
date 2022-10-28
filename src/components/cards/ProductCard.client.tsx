@@ -1,21 +1,21 @@
-import clsx from 'clsx';
+import clsx from 'clsx'
 import {
   flattenConnection,
   Image,
   Link,
   Money,
   useMoney,
-} from '@shopify/hydrogen';
+} from '@shopify/hydrogen'
 
-import {Text} from '~/components';
-import {isDiscounted, isNewArrival} from '~/lib/utils';
-import {getProductPlaceholder} from '~/lib/placeholders';
+import { Text } from '~/components'
+import { isDiscounted, isNewArrival } from '~/lib/utils'
+import { getProductPlaceholder } from '~/lib/placeholders'
 import type {
   MoneyV2,
   Product,
   ProductVariant,
   ProductVariantConnection,
-} from '@shopify/hydrogen/storefront-api-types';
+} from '@shopify/hydrogen/storefront-api-types'
 
 export function ProductCard({
   product,
@@ -24,15 +24,15 @@ export function ProductCard({
   loading,
   onClick,
 }: {
-  product: Product;
-  label?: string;
-  className?: string;
-  loading?: HTMLImageElement['loading'];
-  onClick?: () => void;
+  product: Product
+  label?: string
+  className?: string
+  loading?: HTMLImageElement['loading']
+  onClick?: () => void
 }) {
-  let cardLabel;
+  let cardLabel
 
-  const cardData = product?.variants ? product : getProductPlaceholder();
+  const cardData = product?.variants ? product : getProductPlaceholder()
 
   const {
     image,
@@ -40,17 +40,17 @@ export function ProductCard({
     compareAtPriceV2: compareAtPrice,
   } = flattenConnection<ProductVariant>(
     cardData?.variants as ProductVariantConnection,
-  )[0] || {};
+  )[0] || {}
 
   if (label) {
-    cardLabel = label;
+    cardLabel = label
   } else if (isDiscounted(price as MoneyV2, compareAtPrice as MoneyV2)) {
-    cardLabel = 'Sale';
+    cardLabel = 'Sale'
   } else if (isNewArrival(product.publishedAt)) {
-    cardLabel = 'New';
+    cardLabel = 'New'
   }
 
-  const styles = clsx('grid gap-6', className);
+  const styles = clsx('grid gap-6', className)
 
   return (
     <Link onClick={onClick} to={`/products/${product.handle}`}>
@@ -80,6 +80,7 @@ export function ProductCard({
               loading={loading}
             />
           )}
+
         </div>
         <div className="grid gap-1">
           <Text
@@ -102,25 +103,25 @@ export function ProductCard({
         </div>
       </div>
     </Link>
-  );
+  )
 }
 
 function CompareAtPrice({
   data,
   className,
 }: {
-  data: MoneyV2;
-  className?: string;
+  data: MoneyV2
+  className?: string
 }) {
-  const {currencyNarrowSymbol, withoutTrailingZerosAndCurrency} =
-    useMoney(data);
+  const { currencyNarrowSymbol, withoutTrailingZerosAndCurrency } =
+    useMoney(data)
 
-  const styles = clsx('strike', className);
+  const styles = clsx('strike', className)
 
   return (
     <span className={styles}>
       {currencyNarrowSymbol}
       {withoutTrailingZerosAndCurrency}
     </span>
-  );
+  )
 }
