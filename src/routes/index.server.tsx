@@ -90,7 +90,7 @@ function HomepageContent() {
   )
 
   return (
-    <>
+    <div className=" "    >
       {primaryHero && (
         <Hero {...primaryHero} height="full" top loading="eager" />
       )}
@@ -105,7 +105,7 @@ function HomepageContent() {
         title="Collections"
       />
       {tertiaryHero && <Hero {...tertiaryHero} />}
-    </>
+    </div>
   )
 }
 
