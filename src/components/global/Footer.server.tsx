@@ -1,23 +1,24 @@
-import {useUrl} from '@shopify/hydrogen';
+import { useUrl } from '@shopify/hydrogen'
 
-import {Section, Heading, FooterMenu, CountrySelector} from '~/components';
-import type {EnhancedMenu} from '~/lib/utils';
+import { Section, Heading, FooterMenu, CountrySelector } from '~/components'
+import type { EnhancedMenu } from '~/lib/utils'
 
 /**
  * A server component that specifies the content of the footer on the website
  */
-export function Footer({menu}: {menu?: EnhancedMenu}) {
-  const {pathname} = useUrl();
+export function Footer({ menu }: { menu?: EnhancedMenu }) {
+  console.log("footer-menu", menu)
+  const { pathname } = useUrl()
 
-  const localeMatch = /^\/([a-z]{2})(\/|$)/i.exec(pathname);
-  const countryCode = localeMatch ? localeMatch[1] : null;
+  const localeMatch = /^\/([a-z]{2})(\/|$)/i.exec(pathname)
+  const countryCode = localeMatch ? localeMatch[1] : null
 
-  const isHome = pathname === `/${countryCode ? countryCode + '/' : ''}`;
+  const isHome = pathname === `/${countryCode ? countryCode + '/' : ''}`
   const itemsCount = menu
     ? menu?.items?.length + 1 > 4
       ? 4
       : menu?.items?.length + 1
-    : [];
+    : []
 
   return (
     <Section
@@ -42,5 +43,5 @@ export function Footer({menu}: {menu?: EnhancedMenu}) {
         Licensed Open Source project. This website is carbon&nbsp;neutral.
       </div>
     </Section>
-  );
+  )
 }

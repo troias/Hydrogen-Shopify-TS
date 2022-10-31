@@ -79,6 +79,9 @@ function HomepageContent() {
     preload: true,
   })
 
+
+  // console.log("heroBanners", data.heroBanners)
+
   const { heroBanners, featuredCollections, featuredProducts } = data
 
   // fill in the hero banners with placeholders if they're missing

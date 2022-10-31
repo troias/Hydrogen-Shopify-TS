@@ -1,34 +1,36 @@
-import {Link, Image} from '@shopify/hydrogen';
-import type {Collection} from '@shopify/hydrogen/storefront-api-types';
+import { Link, Image } from '@shopify/hydrogen'
+import type { Collection } from '@shopify/hydrogen/storefront-api-types'
 
-import {Heading, Section, Grid} from '~/components';
+import { Heading, Section, Grid } from '~/components'
 
 export function FeaturedCollections({
   data,
   title = 'Collections',
   ...props
 }: {
-  data: Collection[];
+  data: Collection[]
   title?: string;
-  [key: string]: any;
+  [key: string]: any
 }) {
-  const items = data.filter((item) => item.image).length;
-  const haveCollections = data.length > 0;
+  const items = data.filter((item) => item.image).length
+  const haveCollections = data.length > 0
 
-  if (!haveCollections) return null;
+  if (!haveCollections) return null
 
   return (
     <Section {...props} heading={title}>
       <Grid items={items}>
         {data.map((collection) => {
           if (!collection?.image) {
-            return null;
+            return null
           }
           // TODO: Refactor to use CollectionCard
           return (
             <Link key={collection.id} to={`/collections/${collection.handle}`}>
+
               <div className="grid gap-4">
                 <div className="card-image bg-primary/5 aspect-[3/2]">
+
                   {collection?.image && (
                     <Image
                       alt={`Image of ${collection.title}`}
@@ -47,9 +49,9 @@ export function FeaturedCollections({
                 <Heading size="copy">{collection.title}</Heading>
               </div>
             </Link>
-          );
+          )
         })}
       </Grid>
     </Section>
-  );
+  )
 }
