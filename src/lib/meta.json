@@ -1,0 +1,17 @@
+{
+  "spread": {
+    "reference": {
+      "mediaContentType": "string",
+      "alt": "string",
+      "previewImage": {
+        "url": "string"
+      },
+      "id": "string",
+      "image": {
+        "url": "string",
+        "width": "integer",
+        "height": "integer"
+      }
+    }
+  }
+}

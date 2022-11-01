@@ -1,11 +1,11 @@
-import {Image, Link, Video} from '@shopify/hydrogen';
-import type {Media} from '@shopify/hydrogen/storefront-api-types';
+import { Image, Link, Video } from '@shopify/hydrogen'
+import type { Media } from '@shopify/hydrogen/storefront-api-types'
 
-import {Heading, Text} from '~/components';
+import { Heading, Text } from '~/components'
 
 interface Metafield {
-  value: string;
-  reference?: object;
+  value: string
+  reference?: object
 }
 
 export function Hero({
@@ -19,28 +19,26 @@ export function Hero({
   spreadSecondary,
   top,
 }: {
-  byline: Metafield;
-  cta: Metafield;
-  handle: string;
-  heading: Metafield;
-  height?: 'full';
-  loading?: 'eager' | 'lazy';
-  spread: Metafield;
-  spreadSecondary: Metafield;
-  top?: boolean;
+  byline: Metafield
+  cta: Metafield
+  handle: string
+  heading: Metafield
+  height?: 'full'
+  loading?: 'eager' | 'lazy'
+  spread: Metafield
+  spreadSecondary: Metafield
+  top?: boolean
 }) {
   return (
     <Link to={`/collections/${handle}`}>
       <section
-        className={`relative justify-end flex flex-col w-full ${
-          top && '-mt-nav'
-        } ${
-          height === 'full'
+        className={`relative justify-end flex flex-col w-full ${top && '-mt-nav'
+          } ${height === 'full'
             ? 'h-screen'
             : 'aspect-[4/5] sm:aspect-square md:aspect-[5/4] lg:aspect-[3/2] xl:aspect-[2/1]'
-        }`}
+          }`}
       >
-        <div className="absolute inset-0 grid flex-grow grid-flow-col pointer-events-none auto-cols-fr -z-10 content-stretch overflow-clip">
+        <div className="absolute inset-0 grid flex-grow grid-flow-col pointer-events-none auto-cols-fr -z-10 content-stretch overflow-clip ">
           {spread?.reference && (
             <div className="">
               <SpreadMedia
@@ -87,16 +85,16 @@ export function Hero({
         </div>
       </section>
     </Link>
-  );
+  )
 }
 
 interface SpreadMediaProps {
-  data: Media;
-  loading?: HTMLImageElement['loading'];
-  scale?: 2 | 3;
-  sizes: string;
-  width: number;
-  widths: number[];
+  data: Media
+  loading?: HTMLImageElement['loading']
+  scale?: 2 | 3
+  sizes: string
+  width: number
+  widths: number[]
 }
 
 function SpreadMedia({
@@ -110,7 +108,7 @@ function SpreadMedia({
   if (data.mediaContentType === 'VIDEO') {
     return (
       <Video
-        previewImageOptions={{scale, src: data.previewImage!.url}}
+        previewImageOptions={{ scale, src: data.previewImage!.url }}
         width={scale! * width}
         className="block object-cover w-full h-full"
         data={data}
@@ -120,7 +118,7 @@ function SpreadMedia({
         playsInline
         autoPlay
       />
-    );
+    )
   }
 
   if (data.mediaContentType === 'IMAGE') {
@@ -134,10 +132,10 @@ function SpreadMedia({
         data={data.image}
         loading={loading}
         width={width}
-        loaderOptions={{scale, crop: 'center'}}
+        loaderOptions={{ scale, crop: 'center' }}
       />
-    );
+    )
   }
 
-  return null;
+  return null
 }

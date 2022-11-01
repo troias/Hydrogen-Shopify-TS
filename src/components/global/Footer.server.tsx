@@ -7,7 +7,7 @@ import type { EnhancedMenu } from '~/lib/utils'
  * A server component that specifies the content of the footer on the website
  */
 export function Footer({ menu }: { menu?: EnhancedMenu }) {
-  console.log("footer-menu", menu)
+  // console.log("footer-menu", menu)
   const { pathname } = useUrl()
 
   const localeMatch = /^\/([a-z]{2})(\/|$)/i.exec(pathname)

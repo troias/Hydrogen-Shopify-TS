@@ -26,7 +26,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Suspense fallback={<Header title={SHOP_NAME_FALLBACK} />}>
           <HeaderWithMenu />
         </Suspense>
-        <main role="main" id="mainContent" className="flex  flex-grow  justify-center ">
+        <main role="main" id="mainContent" className=" ">
           {children}
         </main>
       </div>

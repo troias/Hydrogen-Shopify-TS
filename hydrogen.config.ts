@@ -1,14 +1,14 @@
 import { defineConfig, CookieSessionStorage } from '@shopify/hydrogen/config'
 
 
-console.log(
-  import.meta.env.VITE_PRIVATE_STOREFRONT_API_TOKEN,
-  import.meta.env.VITE_STOREFRONT_API_TOKEN,
-  import.meta.env.VITE_PUBLIC_STORE_DOMAIN,
-  import.meta.env.VITE_STOREFRONT_ID,
+// console.log(
+//   import.meta.env.VITE_PRIVATE_STOREFRONT_API_TOKEN,
+//   import.meta.env.VITE_STOREFRONT_API_TOKEN,
+//   import.meta.env.VITE_PUBLIC_STORE_DOMAIN,
+//   import.meta.env.VITE_STOREFRONT_ID,
 
 
-)
+// )
 export default defineConfig({
   shopify: {
     defaultCountryCode: 'US',
