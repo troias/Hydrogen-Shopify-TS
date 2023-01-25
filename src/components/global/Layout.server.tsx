@@ -83,7 +83,7 @@ function useLayoutQuery() {
     ? parseMenu(data.headerMenu, customPrefixes)
     : undefined
 
-  console.log("menu", headerMenu)
+  // console.log("menu", headerMenu)
 
   const footerMenu = data?.footerMenu
     ? parseMenu(data.footerMenu, customPrefixes)

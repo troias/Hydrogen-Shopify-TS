@@ -209,7 +209,7 @@ export function getHeroPlaceholder(heros: any[]) {
 
     // hero placeholder
     const placeholder = PLACEHOLDERS.HEROS[index]
-    console.log("placeholder", placeholder)
+    // console.log("placeholder", placeholder)
 
     // prioritize metafield data if available, else the hero hero values
     // otherwise the placeholder values

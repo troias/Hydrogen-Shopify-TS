@@ -25,7 +25,10 @@ export default defineConfig({
     storefrontApiVersion: '2022-07',
     // @ts-ignore
     storefrontId: import.meta.env.VITE_STOREFRONT_ID,
+
   },
+
+
   session: CookieSessionStorage('__session', {
     path: '/',
     httpOnly: true,

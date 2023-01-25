@@ -36,7 +36,7 @@ export default function Page({ params }: HydrogenRouteProps) {
     },
   })
 
-  console.log("page", page)
+  // console.log("page", page)
 
   return (
     <Layout>

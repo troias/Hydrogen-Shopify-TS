@@ -10,7 +10,9 @@ import {
   ShopPayButton,
 } from '@shopify/hydrogen'
 
-import { Heading, Text, Button, ProductOptions } from '~/components'
+import { Heading, Text, Button, ProductOptions, AddStory } from '~/components'
+
+
 
 interface SeletedVariant {
   id: string
@@ -32,6 +34,10 @@ export function ProductForm() {
   const { pathname, search } = useUrl()
   const [params, setParams] = useState(new URLSearchParams(search))
 
+
+  const [open, setOpen] = useState(false)
+
+
   const { options, setSelectedOption, selectedOptions, selectedVariant } =
     useProductOptions()
 
@@ -46,6 +52,8 @@ export function ProductForm() {
     if (params || !search) return
     setParams(new URLSearchParams(search))
   }, [params, search])
+
+
 
   useEffect(() => {
     (options as OptionWithValues[]).map(({ name, values }) => {
@@ -69,6 +77,11 @@ export function ProductForm() {
       }
     })
   }, [])
+
+
+
+
+
 
   const handleChange = useCallback(
     (name: string, value: string) => {
@@ -118,7 +131,7 @@ export function ProductForm() {
         </div>
       }
       <div className="grid items-stretch gap-4">
-        <AddToCartButton
+        {/* <AddToCartButton
           variantId={selectedVariant?.id}
           quantity={1}
           accessibleAddingToCartLabel="Adding item to your cart"
@@ -154,8 +167,13 @@ export function ProductForm() {
               </Text>
             )}
           </Button>
-        </AddToCartButton>
-        {!isOutOfStock && <ShopPayButton variantIds={[selectedVariant.id!]} />}
+        </AddToCartButton> */}
+
+
+
+        <AddStory />
+
+        {/* {!isOutOfStock && <ShopPayButton variantIds={[selectedVariant.id!]} />} */}
       </div>
     </form>
   )

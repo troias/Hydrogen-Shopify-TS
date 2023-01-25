@@ -9,6 +9,8 @@ import {
   useShopQuery,
 } from '@shopify/hydrogen'
 
+//import error boundayr from react-error-boundar? 
+import { ErrorBoundary } from 'react-error-boundary'
 import { MEDIA_FRAGMENT, PRODUCT_CARD_FRAGMENT } from '~/lib/fragments'
 import { getHeroPlaceholder } from '~/lib/placeholders'
 import { FeaturedCollections, Hero } from '~/components'
@@ -50,12 +52,16 @@ export default function Homepage() {
 
   return (
     <Layout>
-      <Suspense>
+
+      <Suspense fallback={<div>Something went wrong</div>}
+      >
         <SeoForHomepage />
       </Suspense>
-      <Suspense>
+
+      <Suspense fallback={<div>Something went wrong</div>}>
         <HomepageContent />
       </Suspense>
+
     </Layout>
   )
 }
@@ -90,7 +96,7 @@ function HomepageContent() {
   const [primaryHero, secondaryHero, tertiaryHero] = getHeroPlaceholder(
     heroBanners.nodes,
   )
-  console.log("primaryHero", secondaryHero)
+  // console.log("primaryHero", secondaryHero)
   return (
     <   >
       {primaryHero && (

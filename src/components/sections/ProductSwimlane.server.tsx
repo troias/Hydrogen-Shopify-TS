@@ -1,13 +1,15 @@
-import {Suspense, useMemo} from 'react';
-import {gql, useShopQuery, useLocalization} from '@shopify/hydrogen';
-import {PRODUCT_CARD_FRAGMENT} from '~/lib/fragments';
-import {ProductCard, Section} from '~/components';
+/* eslint-disable prettier/prettier */
+import { Suspense, useMemo, } from 'react'
+import { gql, useShopQuery, useLocalization } from '@shopify/hydrogen'
+import { PRODUCT_CARD_FRAGMENT } from '~/lib/fragments'
+import { ProductCard, Section } from '~/components'
+
 import type {
   Product,
   ProductConnection,
-} from '@shopify/hydrogen/storefront-api-types';
+} from '@shopify/hydrogen/storefront-api-types'
 
-const mockProducts = new Array(12).fill('');
+const mockProducts = new Array(12).fill('')
 
 export function ProductSwimlane({
   title = 'Featured Products',
@@ -18,7 +20,8 @@ export function ProductSwimlane({
   const productCardsMarkup = useMemo(() => {
     // If the data is already provided, there's no need to query it, so we'll just return the data
     if (typeof data === 'object') {
-      return <ProductCards products={data} />;
+      console.log("data is object")
+      return <ProductCards products={data} />
     }
 
     // If the data provided is a productId, we will query the productRecommendations API.
@@ -28,12 +31,12 @@ export function ProductSwimlane({
         <Suspense>
           <RecommendedProducts productId={data} count={count} />
         </Suspense>
-      );
+      )
     }
 
     // If no data is provided, we'll go and query the top products
-    return <TopProducts count={count} />;
-  }, [count, data]);
+    return <TopProducts count={count} />
+  }, [count, data])
 
   return (
     <Section heading={title} padding="y" {...props}>
@@ -41,10 +44,10 @@ export function ProductSwimlane({
         {productCardsMarkup}
       </div>
     </Section>
-  );
+  )
 }
 
-function ProductCards({products}: {products: Product[]}) {
+function ProductCards({ products }: { products: Product[] }) {
   return (
     <>
       {products.map((product) => (
@@ -55,24 +58,24 @@ function ProductCards({products}: {products: Product[]}) {
         />
       ))}
     </>
-  );
+  )
 }
 
 function RecommendedProducts({
   productId,
   count,
 }: {
-  productId: string;
-  count: number;
+  productId: string
+  count: number
 }) {
   const {
-    language: {isoCode: languageCode},
-    country: {isoCode: countryCode},
-  } = useLocalization();
+    language: { isoCode: languageCode },
+    country: { isoCode: countryCode },
+  } = useLocalization()
 
-  const {data: products} = useShopQuery<{
-    recommended: Product[];
-    additional: ProductConnection;
+  const { data: products } = useShopQuery<{
+    recommended: Product[]
+    additional: ProductConnection
   }>({
     query: RECOMMENDED_PRODUCTS_QUERY,
     variables: {
@@ -81,35 +84,40 @@ function RecommendedProducts({
       languageCode,
       countryCode,
     },
-  });
+  })
+
+  // console.log("reccomended products", products)
 
   const mergedProducts = products.recommended
     .concat(products.additional.nodes)
     .filter(
       (value, index, array) =>
         array.findIndex((value2) => value2.id === value.id) === index,
-    );
+    )
 
   const originalProduct = mergedProducts
     .map((item) => item.id)
-    .indexOf(productId);
+    .indexOf(productId)
 
-  mergedProducts.splice(originalProduct, 1);
+  mergedProducts.splice(originalProduct, 1)
 
-  return <ProductCards products={mergedProducts} />;
+  return <ProductCards products={mergedProducts} />
 }
 
-function TopProducts({count}: {count: number}) {
+function TopProducts({ count }: { count: number }) {
   const {
-    data: {products},
+    data: { products }
   } = useShopQuery({
     query: TOP_PRODUCTS_QUERY,
     variables: {
       count,
     },
-  });
 
-  return <ProductCards products={products.nodes} />;
+  })
+
+  type Products = typeof products
+
+  return <ProductCards products={products.nodes} />
 }
 
 const RECOMMENDED_PRODUCTS_QUERY = gql`
@@ -129,7 +137,7 @@ const RECOMMENDED_PRODUCTS_QUERY = gql`
       }
     }
   }
-`;
+`
 
 const TOP_PRODUCTS_QUERY = gql`
   ${PRODUCT_CARD_FRAGMENT}
@@ -144,4 +152,4 @@ const TOP_PRODUCTS_QUERY = gql`
       }
     }
   }
-`;
+`

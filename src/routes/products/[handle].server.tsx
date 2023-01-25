@@ -1,4 +1,4 @@
-import {Suspense} from 'react';
+import { Suspense } from 'react'
 import {
   ClientAnalytics,
   gql,
@@ -9,11 +9,11 @@ import {
   useRouteParams,
   useServerAnalytics,
   useShopQuery,
-} from '@shopify/hydrogen';
+} from '@shopify/hydrogen'
 
-import {MEDIA_FRAGMENT} from '~/lib/fragments';
-import {getExcerpt} from '~/lib/utils';
-import {NotFound, Layout, ProductSwimlane} from '~/components/index.server';
+import { MEDIA_FRAGMENT } from '~/lib/fragments'
+import { getExcerpt } from '~/lib/utils'
+import { NotFound, Layout, ProductSwimlane } from '~/components/index.server'
 import {
   Heading,
   ProductDetail,
@@ -21,17 +21,18 @@ import {
   ProductGallery,
   Section,
   Text,
-} from '~/components';
+
+} from '~/components'
 
 export default function Product() {
-  const {handle} = useRouteParams();
+  const { handle } = useRouteParams()
   const {
-    language: {isoCode: languageCode},
-    country: {isoCode: countryCode},
-  } = useLocalization();
+    language: { isoCode: languageCode },
+    country: { isoCode: countryCode },
+  } = useLocalization()
 
   const {
-    data: {product, shop},
+    data: { product, shop },
   } = useShopQuery({
     query: PRODUCT_QUERY,
     variables: {
@@ -40,20 +41,20 @@ export default function Product() {
       handle,
     },
     preload: true,
-  });
+  })
 
   if (!product) {
-    return <NotFound type="product" />;
+    return <NotFound type="product" />
   }
 
-  const {media, title, vendor, descriptionHtml, id, productType} = product;
-  const {shippingPolicy, refundPolicy} = shop;
+  const { media, title, vendor, descriptionHtml, id, productType } = product
+  const { shippingPolicy, refundPolicy } = shop
   const {
     priceV2,
     id: variantId,
     sku,
     title: variantTitle,
-  } = product.variants.nodes[0];
+  } = product.variants.nodes[0]
 
   useServerAnalytics({
     shopify: {
@@ -73,7 +74,7 @@ export default function Product() {
         },
       ],
     },
-  });
+  })
 
   return (
     <Layout>
@@ -129,7 +130,7 @@ export default function Product() {
         </Suspense>
       </ProductOptionsProvider>
     </Layout>
-  );
+  )
 }
 
 const PRODUCT_QUERY = gql`
@@ -197,4 +198,4 @@ const PRODUCT_QUERY = gql`
       }
     }
   }
-`;
+`
