@@ -37,23 +37,25 @@ export function AddCharacter({
         id: string,
 
     ) => {
+        const removeCharacterBasedOnIDHandler = (id: string) => {
 
-        const removeCharacterHandler = (id) => {
-            const updatedCharacterArray = characters.filter(
-                (character) => character.id !== id
-            )
-
-            setCharacters(updatedCharacterArray)
-
+            // console.log("id", id)
+            const updatedCharacters = characters.filter((character) => {
+                // console.log("character", character.id)
+                // console.log("id", id.id)
+                return character.id !== id.id
+            })
+            console.log("updatedCharacters", updatedCharacters)
+            setCharacters(updatedCharacters)
         }
 
-        console.log("clicked", id)
+
 
         return (
             <button
                 className="bg-indigo-600 text-white rounded-md py-2 px-4 hover:bg-indigo-600"
                 onClick={() => {
-                    removeCharacterHandler(id)
+                    removeCharacterBasedOnIDHandler(id)
                 }}
             >
                 Remove
@@ -115,7 +117,8 @@ export function AddCharacter({
                                 <span className='px-4 bg-indigo-600 rounded-lg text-white py-2  '
 
                                 >
-                                    <RemoveSVGButton name={character.name} />
+                                    {/* {console.log("character", character.id)} */}
+                                    <RemoveSVGButton id={character.id} />
                                     {character.name}
 
                                 </span>
