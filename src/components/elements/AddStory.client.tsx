@@ -1,6 +1,7 @@
-import { Fragment, useRef, useState, useMemo, useEffect } from 'react'
+import { Fragment, useState, useRef } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
-import { CheckIcon } from '@heroicons/react/24/outline'
+import { AddCharacter } from '~/components'
+// import { CheckIcon } from '@heroicons/react/24/outline'
 
 export function AddStory({
 
@@ -11,6 +12,7 @@ export function AddStory({
     const [open, setOpen] = useState(false)
 
 
+
     const cancelButtonRef = useRef(null)
 
     return (
@@ -18,7 +20,7 @@ export function AddStory({
             <button
                 type="button"
                 className="justify-center inline-flex items-center rounded-md border border-transparent bg-black px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                onClick={() => setOpen(!open)}
+                onClick={() => setOpen(true)}
             >
                 ADD STORY
             </button>
@@ -50,23 +52,17 @@ export function AddStory({
                             >
                                 <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6">
 
-                                    <div className="mt-5 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
-                                        <button
-                                            type="button"
-                                            className="inline-flex w-full justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:col-start-2 sm:text-sm"
-                                            onClick={() => setOpen(false)}
-                                        >
-                                            Deactivate
-                                        </button>
-                                        <button
-                                            type="button"
-                                            className="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:col-start-1 sm:mt-0 sm:text-sm"
-                                            onClick={() => setOpen(false)}
-                                            ref={cancelButtonRef}
-                                        >
-                                            Cancel
-                                        </button>
-                                    </div>
+
+                                    <AddCharacter />
+                                    <button
+                                        type="button"
+                                        className="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:col-start-1 sm:mt-0 sm:text-sm"
+                                        onClick={() => setOpen(false)}
+                                        ref={cancelButtonRef}
+                                    >
+                                        Cancel
+                                    </button>
+
                                 </Dialog.Panel>
                             </Transition.Child>
                         </div>
